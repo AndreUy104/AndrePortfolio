@@ -1,463 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andre Lennard S. Uy — Web Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --linen: #EFE8D8;
-    --ink: #211D17;
-    --card: #FAF7F0;
-    --brick: #8C3A25;
-    --brick-soft: #a3462d;
-    --pine: #33413A;
-    --pine-text: #E9E4D6;
-    --hairline: #D9CFBB;
-    --hairline-dark: rgba(233,228,214,0.18);
-  }
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andre Lennard S. Uy — Web Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --linen: #EFE8D8;
+        --ink: #211D17;
+        --card: #FAF7F0;
+        --brick: #8C3A25;
+        --brick-soft: #a3462d;
+        --pine: #33413A;
+        --pine-text: #E9E4D6;
+        --hairline: #D9CFBB;
+        --hairline-dark: rgba(233,228,214,0.18);
+      }
 
-  * { box-sizing: border-box; }
+      * { box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+      html { scroll-behavior: smooth; }
 
-  body {
-    margin: 0;
-    background: var(--linen);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
+      body {
+        margin: 0;
+        background: var(--linen);
+        color: var(--ink);
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-  }
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition: none !important; }
+      }
 
-  a { color: inherit; }
+      a { color: inherit; }
 
-  .wrap {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 56px 24px 80px;
-  }
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 56px 24px 80px;
+      }
 
-  header.top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--hairline);
-  }
+      header.top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--hairline);
+      }
 
-  header.top .mark {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 20px;
-  }
+      header.top .mark {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 20px;
+      }
 
-  header.top nav a {
-    text-decoration: none;
-    font-size: 14px;
-    color: var(--ink);
-    margin-left: 24px;
-    opacity: 0.7;
-    transition: opacity 0.15s ease;
-  }
-  header.top nav a:hover,
-  header.top nav a:focus-visible { opacity: 1; }
+      header.top nav a {
+        text-decoration: none;
+        font-size: 14px;
+        color: var(--ink);
+        margin-left: 24px;
+        opacity: 0.7;
+        transition: opacity 0.15s ease;
+      }
+      header.top nav a:hover,
+      header.top nav a:focus-visible { opacity: 1; }
 
-  /* --- Bento grid --- */
-    .bento {
-        display: grid;
-        grid-template-columns: repeat(12, minmax(0, 1fr));
-        gap: 16px;
-        grid-template-areas:
-            "hero hero hero hero hero hero hero hero about about about about"
-            "hero hero hero hero hero hero hero hero about about about about"
-            "brigade brigade brigade brigade story story story story story story story story"
-            "brigade brigade brigade brigade story story story story story story story story"
-            "project1 project1 project1 project1 project1 project1 project2 project2 project2 project2 project2 project2"
-            "stack stack stack stack stack stack stack stack stack stack stack stack"
-            "contact contact contact contact contact contact contact contact contact contact contact contact";
+      /* --- Bento grid ---
+        Mobile-first: everything is a single stacked column by default
+        (this is the actual layout on phones — not a fallback bolted on
+        after the fact). The named-area bento grid is a progressive
+        enhancement that only turns on once there's room for it. */
+        .bento {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        /* Small tablets / large phones: still one column, but the two
+          project cards sit side by side since they're short enough to
+          share a row without cramping. */
+        @media (min-width: 640px) {
+            .bento {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .hero, .about, .brigade, .story, .stack, .contact {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* Full bento grid, as originally designed. */
+        @media (min-width: 900px) {
+            .bento {
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+                grid-template-areas:
+                    "hero hero hero hero hero hero hero hero about about about about"
+                    "hero hero hero hero hero hero hero hero about about about about"
+                    "brigade brigade brigade brigade story story story story story story story story"
+                    "brigade brigade brigade brigade story story story story story story story story"
+                    "project1 project1 project1 project1 project1 project1 project2 project2 project2 project2 project2 project2"
+                    "stack stack stack stack stack stack stack stack stack stack stack stack"
+                    "contact contact contact contact contact contact contact contact contact contact contact contact";
+            }
+            .hero, .about, .brigade, .story, .project-a, .project-b, .stack, .contact {
+                grid-column: auto;
+            }
+            .hero { grid-area: hero; }
+            .about { grid-area: about; }
+            .brigade { grid-area: brigade; }
+            .story { grid-area: story; }
+            .project-a { grid-area: project1; }
+            .project-b { grid-area: project2; }
+            .stack { grid-area: stack; }
+            .contact { grid-area: contact; }
+        }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--hairline);
+        border-radius: 18px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      .card.reveal { animation: rise 0.6s cubic-bezier(.2,.7,.3,1) forwards; }
+
+      @keyframes rise {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .meta {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        color: var(--brick);
+        letter-spacing: 0.01em;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .card.dark .meta { color: #C9A98C; }
+
+      /* Hero */
+      .hero h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: clamp(34px, 4.6vw, 54px);
+        line-height: 1.05;
+        margin: 0 0 4px;
+      }
+      .hero .role {
+        font-size: 17px;
+        color: var(--brick);
+        font-weight: 500;
+        margin-bottom: 22px;
+      }
+      .hero .hook {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(17px, 1.7vw, 20px);
+        max-width: 46ch;
+        color: #4a4235;
+        line-height: 1.5;
+      }
+
+      /* About */
+      .about h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 21px;
+        margin: 0 0 12px;
+      }
+      .about p { margin: 0 0 10px; font-size: 14.5px; color: #4a4235; }
+      .about p:last-child { margin-bottom: 0; }
+
+      /* Fire brigade */
+      .brigade {
+        background: var(--pine);
+      }
+      .brigade h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 21px;
+        margin: 0 0 12px;
+        color: #fff;
+      }
+      .brigade p { margin: 0 0 10px; font-size: 14.5px; color: #cfd6cd; }
+      .brigade p:last-child { margin-bottom: 0; }
+      .brigade ul { margin: 10px 0 0; padding-left: 18px; font-size: 13.5px; color: #cfd6cd; }
+      .brigade li { margin-bottom: 4px; }
+
+      /* Origin story */
+      .story .label-col {
+        display: flex;
+        flex-direction: column;
+      }
+      .story .label-col h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .story .body-col p {
+        font-size: 15px;
+        color: #4a4235;
+        margin: 0 0 14px;
+        max-width: 62ch;
+      }
+      .story .body-col p:last-child { margin-bottom: 0; }
+      .story .pull {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(19px, 2vw, 23px);
+        color: var(--brick);
+        line-height: 1.4;
+        max-width: 60ch;
+        margin: 4px 0 16px;
+      }
+
+
+      /* Projects */
+      .project {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .project h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 24px;
+        margin: 0 0 10px;
+      }
+      .project p.desc {
+        font-size: 14.5px;
+        color: #4a4235;
+        margin: 0 0 16px;
+        flex-grow: 1;
+      }
+      .stack-line {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        color: #6b6152;
+        margin-bottom: 16px;
+      }
+      .project .links {
+        display: flex;
+        gap: 14px;
+        padding-top: 14px;
+        border-top: 1px solid var(--hairline);
+      }
+      .project .links a {
+        text-decoration: none;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--brick);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.15s ease;
+      }
+      .project .links a:hover,
+      .project .links a:focus-visible { color: var(--brick-soft); text-decoration: underline; }
+
+      /* Stack chips */
+      .stack h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 21px;
+        margin: 0 0 6px;
+      }
+      .stack .sub {
+        font-size: 13.5px;
+        color: #6b6152;
+        margin-bottom: 18px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-content: flex-start;
+      }
+      .chip {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        padding: 7px 12px;
+        border: 1px solid var(--hairline);
+        border-radius: 999px;
+        color: var(--ink);
+        background: var(--linen);
+      }
+
+      /* Contact */
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--hairline);
-    border-radius: 18px;
-    padding: 28px;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(14px);
-  }
-
-  .card.reveal { animation: rise 0.6s cubic-bezier(.2,.7,.3,1) forwards; }
-
-  @keyframes rise {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px;
-    color: var(--brick);
-    letter-spacing: 0.01em;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .card.dark .meta { color: #C9A98C; }
-
-  /* Hero */
-    .hero {
-        grid-area: hero;
+    @media (min-width: 640px) {
+      .contact {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
-  .hero h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: clamp(34px, 4.6vw, 54px);
-    line-height: 1.05;
-    margin: 0 0 4px;
-  }
-  .hero .role {
-    font-size: 17px;
-    color: var(--brick);
-    font-weight: 500;
-    margin-bottom: 22px;
-  }
-  .hero .hook {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(17px, 1.7vw, 20px);
-    max-width: 46ch;
-    color: #4a4235;
-    line-height: 1.5;
-  }
+      .contact h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 24px;
+        margin: 0;
+      }
+      .contact .sub {
+        font-size: 14px;
+        color: #6b6152;
+        margin-top: 4px;
+      }
+      .contact .links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .contact .links a {
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 10px 18px;
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+      .contact .links a.primary {
+        background: var(--ink);
+        color: var(--card);
+      }
+      .contact .links a:hover,
+      .contact .links a:focus-visible {
+        background: var(--brick);
+        border-color: var(--brick);
+        color: #fff;
+      }
 
-  /* About */
-    .about {
-        grid-area: about;
-    }
-  .about h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 21px;
-    margin: 0 0 12px;
-  }
-  .about p { margin: 0 0 10px; font-size: 14.5px; color: #4a4235; }
-  .about p:last-child { margin-bottom: 0; }
+      footer {
+        text-align: center;
+        font-size: 12.5px;
+        color: #8a8070;
+        margin-top: 48px;
+      }
 
-  /* Fire brigade */
-    .brigade {
-            background: var(--pine);
-        grid-area: brigade;
-    }
-  .brigade h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 21px;
-    margin: 0 0 12px;
-    color: #fff;
-  }
-  .brigade p { margin: 0 0 10px; font-size: 14.5px; color: #cfd6cd; }
-  .brigade p:last-child { margin-bottom: 0; }
-  .brigade ul { margin: 10px 0 0; padding-left: 18px; font-size: 13.5px; color: #cfd6cd; }
-  .brigade li { margin-bottom: 4px; }
+      a:focus-visible, button:focus-visible {
+        outline: 2px solid var(--brick);
+        outline-offset: 2px;
+      }
 
-  /* Origin story */
-.story {
-  grid-area: story;
-}
-  .story .label-col {
-    display: flex;
-    flex-direction: column;
-  }
-  .story .label-col h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 22px;
-    margin: 0 0 6px;
-  }
-  .story .body-col p {
-    font-size: 15px;
-    color: #4a4235;
-    margin: 0 0 14px;
-    max-width: 62ch;
-  }
-  .story .body-col p:last-child { margin-bottom: 0; }
-  .story .pull {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(19px, 2vw, 23px);
-    color: var(--brick);
-    line-height: 1.4;
-    max-width: 60ch;
-    margin: 4px 0 16px;
-  }
-  @media (max-width: 700px) {
-    .story { grid-template-columns: 1fr; padding: 28px 24px; }
-  }
+      /* Responsive */
+      @media (max-width: 560px) {
+        .wrap { padding: 36px 16px 60px; }
+        header.top { flex-direction: column; align-items: flex-start; gap: 10px; }
+        header.top nav a { margin-left: 0; margin-right: 18px; }
+        .card { padding: 22px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
 
-  /* Projects */
-.project:nth-of-type(5) {
-  grid-area: project1;
-}
+      <header class="top">
+        <span class="mark">Andre Lennard S. Uy</span>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
 
-.project:nth-of-type(6) {
-  grid-area: project2;
-}
+      <main class="bento" id="grid">
 
-  .project h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 24px;
-    margin: 0 0 10px;
-  }
-  .project p.desc {
-    font-size: 14.5px;
-    color: #4a4235;
-    margin: 0 0 16px;
-    flex-grow: 1;
-  }
-  .stack-line {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: #6b6152;
-    margin-bottom: 16px;
-  }
-  .project .links {
-    display: flex;
-    gap: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--hairline);
-  }
-  .project .links a {
-    text-decoration: none;
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--brick);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.15s ease;
-  }
-  .project .links a:hover,
-  .project .links a:focus-visible { color: var(--brick-soft); text-decoration: underline; }
+        <section class="card hero" id="about">
+          <h1>Andre Lennard S. Uy</h1>
+          <div class="role">Web Developer</div>
+          <p class="hook">I debug production code by day, and Lead my fellow volunteer firefighter by night — both jobs taught me the same lesson: check your assumptions before someone gets hurt</p>
+        </section>
 
-  /* Stack chips */
-.stack {
-  grid-area: stack;
-}
-  .stack h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 21px;
-    margin: 0 0 6px;
-  }
-  .stack .sub {
-    font-size: 13.5px;
-    color: #6b6152;
-    margin-bottom: 18px;
-  }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-content: flex-start;
-  }
-  .chip {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12.5px;
-    padding: 7px 12px;
-    border: 1px solid var(--hairline);
-    border-radius: 999px;
-    color: var(--ink);
-    background: var(--linen);
-  }
+        <section class="card about">
+          <h2>About</h2>
+          <p>First joined as a Junior Web Developer at Sun Asterisk in Cebu City, building web applications with NestJS, Next.js, GraphQL, and PostgreSQL. My work increasingly follows an AI-Driven Development (AIDD) approach—using AI as a development partner for problem-solving, implementation, testing, and iteration while keeping engineering judgment and code quality at the center.</p>
+          <p>BS Computer Science, Cebu Institute of Technology University. I care about writing tools that hold up under real, sometimes urgent use.</p>
+        </section>
 
-  /* Contact */
-.contact {
-  grid-area: contact;
-}
-  .contact h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 24px;
-    margin: 0;
-  }
-  .contact .sub {
-    font-size: 14px;
-    color: #6b6152;
-    margin-top: 4px;
-  }
-  .contact .links {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .contact .links a {
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 10px 18px;
-    border: 1px solid var(--ink);
-    border-radius: 999px;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .contact .links a.primary {
-    background: var(--ink);
-    color: var(--card);
-  }
-  .contact .links a:hover,
-  .contact .links a:focus-visible {
-    background: var(--brick);
-    border-color: var(--brick);
-    color: #fff;
-  }
+        <section class="card brigade dark">
+          <span class="meta">CFCVFB — Volunteer Fire Brigade</span>
+          <h2>Off the clock</h2>
+          <p>Volunteer Firefighter at the Cebu Filipino-Chinese Volunteers Fire Brigade — and the one who ends up building the brigade's tools.</p>
+          <ul>
+            <li>Engine &amp; equipment checklist app</li>
+          </ul>
+        </section>
 
-  footer {
-    text-align: center;
-    font-size: 12.5px;
-    color: #8a8070;
-    margin-top: 48px;
-  }
+        <section class="card story">
+          <div class="label-col">
+            <span class="meta">Origin</span>
+            <h2>How I got here</h2>
+          </div>
+          <div class="body-col">
+            <p>In senior high, I was headed toward medicine — until the sheer volume of textbooks and unfamiliar terminology scared me off. A fellow CFCVFB volunteer introduced me to programming during the COVID lockdowns, and we spent that time tutoring each other and grinding through freeCodeCamp courses.</p>
+            <p>Then he handed me something real: a bug in the brigade's own records system, the one tracking duties, fire responses, meetings, and training. Fixing it, and later building a feature on top of it, felt less like coding and more like something else entirely.</p>
+            <p class="pull">"It felt like diagnosing a patient — read the symptoms, trace the cause, find the cure. That's still what keeps debugging fun for me."</p>
+          </div>
+        </section>
 
-  a:focus-visible, button:focus-visible {
-    outline: 2px solid var(--brick);
-    outline-offset: 2px;
-  }
+        <section class="card project project-a" id="work">
+          <span class="meta">React · TypeScript</span>
+          <h2>Job Order System</h2>
+          <p class="desc">A live client project for a business job order workflow. Employees track job orders and invoice status end to end, while an inventory system updates automatically the moment a job order is created. A separate analytics page gives the business owner a running view of sales.</p>
+          <div class="stack-line">Inventory sync · Invoice tracking · Sales analytics</div>
+          <div class="links">
+            <a href="https://github.com/AndreUy104/job_order_system" target="_blank" rel="noopener">View on GitHub →</a>
+          </div>
+        </section>
 
-  /* Responsive */
-  @media (max-width: 880px) {
-    .hero, .about, .brigade, .project, .stack { grid-column: span 12; grid-row: auto; }
-  }
-  @media (max-width: 560px) {
-    .wrap { padding: 36px 16px 60px; }
-    header.top { flex-direction: column; align-items: flex-start; gap: 10px; }
-    header.top nav a { margin-left: 0; margin-right: 18px; }
-    .card { padding: 22px; }
-  }
-</style>
-</head>
-<body>
-<div class="wrap">
+        <section class="card project project-b">
+          <span class="meta">React · TypeScript</span>
+          <h2>Engine Checklist</h2>
+          <p class="desc">Built for CFCVFB — keeps every volunteer in sync on the status of the brigade's engines and equipment. Tracks a full history of repairs and issues, plus a personal PPE inventory for each volunteer.</p>
+          <div class="stack-line">Maintenance history · Equipment status · PPE inventory</div>
+          <div class="links">
+            <a href="https://github.com/AndreUy104/cfcvfb_engine_checklist_app" target="_blank" rel="noopener">View on GitHub →</a>
+          </div>
+        </section>
 
-  <header class="top">
-    <span class="mark">Andre Lennard S. Uy</span>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+        <section class="card stack">
+          <h2>Stack</h2>
+          <div class="sub">What I reach for most</div>
+          <div class="chips">
+            <span class="chip">React</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Next.js</span>
+            <span class="chip">NestJS</span>
+            <span class="chip">GraphQL</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">AWS</span>
+            <span class="chip">Docker</span>
+            <span class="chip">Tailwind CSS</span>
+          </div>
+        </section>
 
-  <main class="bento" id="grid">
+        <section class="card contact" id="contact">
+          <div>
+            <h2>Let's talk</h2>
+            <div class="sub">Open to dev &amp; AI-engineering conversations.</div>
+          </div>
+          <div class="links">
+            <a class="primary" href="mailto:Andreuy90@gmail.com">Email</a>
+            <a href="https://github.com/AndreUy104" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/andre-lennard-uy-264805201/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </section>
 
-    <section class="card hero" id="about">
-      <h1>Andre Lennard S. Uy</h1>
-      <div class="role">Web Developer</div>
-      <p class="hook">I debug production code by day, and Lead my fellow volunteer firefighter by night — both jobs taught me the same lesson: check your assumptions before someone gets hurt</p>
-    </section>
+      </main>
 
-    <section class="card about">
-      <h2>About</h2>
-      <p>First joined as a Junior Web Developer at Sun Asterisk in Cebu City, building web applications with NestJS, Next.js, GraphQL, and PostgreSQL. My work increasingly follows an AI-Driven Development (AIDD) approach—using AI as a development partner for problem-solving, implementation, testing, and iteration while keeping engineering judgment and code quality at the center.</p>
-      <p>BS Computer Science, Cebu Institute of Technology University. I care about writing tools that hold up under real, sometimes urgent use.</p>
-    </section>
+      <footer>&copy; 2026 Andre Lennard S. Uy</footer>
 
-    <section class="card brigade dark">
-      <span class="meta">CFCVFB — Volunteer Fire Brigade</span>
-      <h2>Off the clock</h2>
-      <p>Volunteer Firefighter at the Cebu Filipino-Chinese Volunteers Fire Brigade — and the one who ends up building the brigade's tools.</p>
-      <ul>
-        <li>Engine &amp; equipment checklist app</li>
-      </ul>
-    </section>
+    </div>
 
-    <section class="card story">
-      <div class="label-col">
-        <span class="meta">Origin</span>
-        <h2>How I got here</h2>
-      </div>
-      <div class="body-col">
-        <p>In senior high, I was headed toward medicine — until the sheer volume of textbooks and unfamiliar terminology scared me off. A fellow CFCVFB volunteer introduced me to programming during the COVID lockdowns, and we spent that time tutoring each other and grinding through freeCodeCamp courses.</p>
-        <p>Then he handed me something real: a bug in the brigade's own records system, the one tracking duties, fire responses, meetings, and training. Fixing it, and later building a feature on top of it, felt less like coding and more like something else entirely.</p>
-        <p class="pull">"It felt like diagnosing a patient — read the symptoms, trace the cause, find the cure. That's still what keeps debugging fun for me."</p>
-      </div>
-    </section>
+    <script>
+      // One orchestrated reveal on load, staggered by card order.
+      document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, i) => {
+          card.style.animationDelay = (i * 70) + 'ms';
+          card.classList.add('reveal');
+        });
+      });
+    </script>
 
-    <section class="card project" id="work">
-      <span class="meta">React · TypeScript</span>
-      <h2>Job Order System</h2>
-      <p class="desc">A live client project for a business job order workflow. Employees track job orders and invoice status end to end, while an inventory system updates automatically the moment a job order is created. A separate analytics page gives the business owner a running view of sales.</p>
-      <div class="stack-line">Inventory sync · Invoice tracking · Sales analytics</div>
-      <div class="links">
-        <a href="https://github.com/AndreUy104/job_order_system" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-    </section>
-
-    <section class="card project">
-      <span class="meta">React · TypeScript</span>
-      <h2>Engine Checklist</h2>
-      <p class="desc">Built for CFCVFB — keeps every volunteer in sync on the status of the brigade's engines and equipment. Tracks a full history of repairs and issues, plus a personal PPE inventory for each volunteer.</p>
-      <div class="stack-line">Maintenance history · Equipment status · PPE inventory</div>
-      <div class="links">
-        <a href="https://github.com/AndreUy104/cfcvfb_engine_checklist_app" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-    </section>
-
-    <section class="card stack">
-      <h2>Stack</h2>
-      <div class="sub">What I reach for most</div>
-      <div class="chips">
-        <span class="chip">React</span>
-        <span class="chip">TypeScript</span>
-        <span class="chip">Next.js</span>
-        <span class="chip">NestJS</span>
-        <span class="chip">GraphQL</span>
-        <span class="chip">PostgreSQL</span>
-        <span class="chip">AWS</span>
-        <span class="chip">Docker</span>
-        <span class="chip">Tailwind CSS</span>
-      </div>
-    </section>
-
-    <section class="card contact" id="contact">
-      <div>
-        <h2>Let's talk</h2>
-        <div class="sub">Open to dev &amp; AI-engineering conversations.</div>
-      </div>
-      <div class="links">
-        <a class="primary" href="mailto:Andreuy90@gmail.com">Email</a>
-        <a href="https://github.com/AndreUy104" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/andre-lennard-uy-264805201/" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>&copy; 2026 Andre Lennard S. Uy</footer>
-
-</div>
-
-<script>
-  // One orchestrated reveal on load, staggered by card order.
-  document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach((card, i) => {
-      card.style.animationDelay = (i * 70) + 'ms';
-      card.classList.add('reveal');
-    });
-  });
-</script>
-
-</body>
+  </body>
 </html>
